@@ -1,16 +1,18 @@
 package org.example.jee_tp.repository;
 
+import jakarta.persistence.Query;
 import org.example.jee_tp.utils.SessionFactorySingleton;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public abstract class Repository<T> {
-    private SessionFactorySingleton sessionFactory;
-    private Session session;
+    protected SessionFactory sessionFactory;
+    protected Session session;
 
     public Repository() {
-        sessionFactory = (SessionFactorySingleton) SessionFactorySingleton.getSessionFactory();
+        sessionFactory = SessionFactorySingleton.getSessionFactory();
     }
 
     public void create(T entity) { session.save(entity); }
@@ -18,5 +20,13 @@ public abstract class Repository<T> {
     public void delete(T entity) { session.delete(entity); }
 
     abstract T getById(int id);
-    abstract List<T> getAll();
+
+    public List<T> getAll(Class<T> classe){
+        String query = "FROM " + classe.getSimpleName();
+        session = sessionFactory.openSession();
+        Query typedQuery = session.createQuery(query, classe);
+        List<T> list = typedQuery.getResultList();
+        session.close();
+        return list;
+    }
 }

@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.jee_tp.services.PatientService;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 
 @WebServlet(name="patient", value="/patients")
@@ -23,9 +22,10 @@ public class PatientServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
+        String pathInfo = (request.getPathInfo() != null && !request.getPathInfo().isEmpty()) ? request.getPathInfo() : "";
+        System.out.println(pathInfo);
         switch (pathInfo) {
-            case "":
+            default:
                 request.setAttribute("patients", patientService.getAllPatients());
                 request.getRequestDispatcher("/patients.jsp").forward(request, response);
         }

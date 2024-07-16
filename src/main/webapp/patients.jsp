@@ -1,4 +1,4 @@
-<jsp:useBean id="patients" type="java.util.List<org.example.jee_tp.model.Patient>" scope="request">
+<jsp:useBean id="patients" type="java.util.List<org.example.jee_tp.model.Patient>" scope="request"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="WEB-INF/header.html"%>>
 <body>
