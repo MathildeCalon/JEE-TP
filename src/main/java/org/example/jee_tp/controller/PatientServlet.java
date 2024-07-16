@@ -79,15 +79,9 @@ public class PatientServlet extends HttpServlet {
 
                 patientService.addPatient(firstname, lastname, LocalDate.parse(birthdate), fileName);
                 sendPatientList(request, response);
-            case "/addconsultation":
-                String date = request.getParameter("date");
-                String doctor = request.getParameter("doctor");
-                String instruction = request.getParameter("instruction");
-                String caresheet = request.getParameter("caresheet");
-                int id = Integer.parseInt(request.getParameter("id"));
 
-                consultationService.addConsultation(LocalDate.parse(date), doctor, instruction, caresheet, id);
-                sendPatientList(request, response);
+
+
             case "/login":
                 HttpSession session = request.getSession();
                 String name = "admin";

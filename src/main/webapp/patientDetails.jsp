@@ -34,7 +34,7 @@
         </ul>
 
 
-    <form method="post" action="${pageContext.request.contextPath}/patients/addconsultation">
+    <form method="post" action="${pageContext.request.contextPath}/consultations/addconsultation">
         <div>
             <label for="date">Date</label>
             <input type="date" id="date" name="date"/>
