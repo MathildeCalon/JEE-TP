@@ -23,6 +23,16 @@ public class Consultation {
     private String careSheet;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "id_patient")
     private Patient patient;
+
+    @Override
+    public String toString() {
+        return "Consultation{" +
+                "date=" + date +
+                ", doctorName='" + doctorName + '\'' +
+                ", instruction='" + instruction + '\'' +
+                ", careSheet='" + careSheet + '\'' +
+                '}';
+    }
 }

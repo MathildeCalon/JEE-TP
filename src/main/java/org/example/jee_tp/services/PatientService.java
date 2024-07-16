@@ -10,7 +10,7 @@ public class PatientService {
     private PatientRepository patientRepository = new PatientRepository();
 
     public Patient getPatient(int id) {
-        return patientRepository.getById(id);
+        return patientRepository.getById(Patient.class, id);
     }
 
     public void addPatient(String firstname, String lastname, LocalDate birthdate) {

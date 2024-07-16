@@ -17,12 +17,23 @@ import java.util.List;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_patient")
     private int id;
     private String firstname;
     private String lastname;
     private LocalDate birthdate;
 //    private Part picture;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Consultation> consultations;
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", birthdate=" + birthdate +'\'' +
+                ", consultations=" + consultations +
+                '}';
+    }
 }

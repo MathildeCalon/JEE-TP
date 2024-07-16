@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="WEB-INF/header.html"%>
+
+<%@include file="WEB-INF/header.jsp"%>
 
 <h2>A propros de nous</h2>
 <p>Nous sommes dédiés à fournir les meilleurs soins médicaux à nos patients avec compassion et excellence.</p>
