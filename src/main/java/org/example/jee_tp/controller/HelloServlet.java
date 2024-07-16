@@ -1,4 +1,4 @@
-package org.example.jee_tp;
+package org.example.jee_tp.controller;
 
 import java.io.*;
 import jakarta.servlet.http.*;
