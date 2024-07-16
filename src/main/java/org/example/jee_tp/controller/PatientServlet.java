@@ -1,20 +1,21 @@
 package org.example.jee_tp.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import org.example.jee_tp.model.Patient;
 import org.example.jee_tp.services.ConsultationService;
 import org.example.jee_tp.services.PatientService;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @WebServlet(name="patient", value="/patients/*")
+@MultipartConfig(maxFileSize = 1024*1024*10)
 public class PatientServlet extends HttpServlet {
     private PatientService patientService;
     private ConsultationService consultationService;
@@ -23,7 +24,6 @@ public class PatientServlet extends HttpServlet {
     public void init() throws ServletException {
         patientService = new PatientService();
         consultationService =  new ConsultationService();
-//        patientService.addPatient("Mathilde", "Calon", LocalDate.parse("1992-03-31"));
     }
 
     @Override
@@ -34,16 +34,27 @@ public class PatientServlet extends HttpServlet {
         switch (pathInfo) {
             default:
                 sendPatientList(request, response);
+
             case "/login":
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
+
             case "/addpatient":
                 request.getRequestDispatcher("/addPatient.jsp").forward(request, response);
+
             case "/detail":
                 int searchedPatient = Integer.parseInt(request.getParameter("id"));
                 Patient patient = patientService.getPatient(searchedPatient);
                 System.out.println(patient);
                 request.setAttribute("patient", patient);
                 request.getRequestDispatcher("/patientDetails.jsp").forward(request, response);
+
+            case "/search":
+                String searchedName = request.getParameter("search");
+                System.out.println(searchedName);
+                List<Patient> result = patientService.getPatientByName(searchedName);
+                System.out.println("résultats :" + result);
+                request.setAttribute("patient", result);
+                request.getRequestDispatcher("/patients.jsp").forward(request, response);
         }
     }
 
@@ -55,8 +66,18 @@ public class PatientServlet extends HttpServlet {
                 String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
                 String birthdate = request.getParameter("birthdate");
+                Part picture = request.getPart("picture");
+                String uploadPath = getServletContext().getRealPath("/")+"image";
 
-                patientService.addPatient(firstname, lastname, LocalDate.parse(birthdate));
+                File file = new File(uploadPath);
+                if(!file.exists()){
+                    file.mkdir();
+                }
+
+                String fileName = picture.getSubmittedFileName();
+                picture.write(uploadPath+File.separator+fileName);
+
+                patientService.addPatient(firstname, lastname, LocalDate.parse(birthdate), fileName);
                 sendPatientList(request, response);
             case "/addconsultation":
                 String date = request.getParameter("date");

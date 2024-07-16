@@ -1,18 +1,31 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%@include file="WEB-INF/bootstrap.html"%>
+    <title>Liste des patients</title>
+</head>
 <%@include file="WEB-INF/header.jsp" %>
 
 <div class="container">
     <h2>Rechercher un patient</h2>
-    <input/>
-    <button type="submit" class="btn btn-primary">Valider</button>
+    <form action="${pageContext.request.contextPath}/patients/search" method="get">
+        <input type="text" id="search" name="search">
+        <button type="submit" class="btn btn-primary">Valider</button>
+    </form>
 
-    <c:choose>
-        <c:when test="${isLogged}">
-            <a href="addpatient"><div class="btn btn-primary">Ajouter un contact</div></a>
-        </c:when>
-    </c:choose>
+
+    <div>
+        <c:choose>
+            <c:when test="${isLogged}">
+                <a href="addpatient">
+                    <div class="btn btn-primary">Ajouter un contact</div>
+                </a>
+            </c:when>
+        </c:choose>
+    </div>
 
     <h2>Liste des patients</h2>
     <c:choose>

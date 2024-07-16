@@ -22,7 +22,7 @@ public class Patient {
     private String firstname;
     private String lastname;
     private LocalDate birthdate;
-//    private Part picture;
+    private String picture;
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Consultation> consultations;
@@ -33,6 +33,7 @@ public class Patient {
                 "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", birthdate=" + birthdate +'\'' +
+                ", picture=" + picture +'\'' +
                 ", consultations=" + consultations +
                 '}';
     }

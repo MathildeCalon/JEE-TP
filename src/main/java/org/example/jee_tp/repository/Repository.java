@@ -51,6 +51,7 @@ public abstract class Repository<T> {
         }
     };
 
+
     public List<T> getAll(Class<T> classe) {
         String query = "FROM " + classe.getSimpleName();
         session = sessionFactory.openSession();

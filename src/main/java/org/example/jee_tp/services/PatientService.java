@@ -1,5 +1,6 @@
 package org.example.jee_tp.services;
 
+import jakarta.persistence.Query;
 import org.example.jee_tp.model.Patient;
 import org.example.jee_tp.repository.PatientRepository;
 
@@ -13,11 +14,16 @@ public class PatientService {
         return patientRepository.getById(Patient.class, id);
     }
 
-    public void addPatient(String firstname, String lastname, LocalDate birthdate) {
+    public List<Patient> getPatientByName(String name) {
+        return patientRepository.getByName(name);
+    }
+
+    public void addPatient(String firstname, String lastname, LocalDate birthdate, String picture) {
         patientRepository.create(Patient.builder()
                         .firstname(firstname)
                         .lastname(lastname)
                         .birthdate(birthdate)
+                        .picture(picture)
                         .build());
     }
 
